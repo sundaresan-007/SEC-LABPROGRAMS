@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Text Analyser</title>
+</head>
+<style>
+    h1{
+        color: darkseagreen;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    body{
+       background-color: blanchedalmond;
+        text-align: center;
+        margin-top: 15%;
+    }
+    button{
+        border-radius: 20px 20px 20px 20px;
+        color: cadetblue;
+        background-color: rgb(67, 64, 60);
+    }
+</style>
+<body>
+    <h1>Mini Text Analyser</h1>
+    <textarea id="paragraphInput" placeholder="                     Enter a paragraph" cols="60" rows="6" ></textarea><br>
+    <button onclick="analyzeText()">Analyze</button>
+
+    <pre id="output"></pre>
+    <script>
+        function analyzeText() {
+            const text=document.getElementById("paragraphInput").value;
+            const totalChars=text.length;
+            const words=text.match(/\b\w+\b/g)||[];
+            const totalWords=words.length;
+            const totalSentences=(text.match(/[.!?]/g)||[]).length;
+            const uniqueWords=[...new Set(words.map(w=>w.toLowerCase()))];
+            const freq={};
+            words.forEach(word=>{
+                const w=word.toLowerCase();
+                freq[w]=(freq[w]||0)+1;
+            });
+            const sortedFreq= Object.entries(freq).sort((a,b)=>b[1]-a[1]);
+            const output = ` 
+         Total Characters:${totalChars}
+         Total Words: ${totalWords}
+         Total Sentences:${totalSentences}
+         Unique Words:${uniqueWords.join(",")}
+         Word Frequency:
+            ${sortedFreq.map(([word,count])=>word+";"+count).join("\n")}
+            `;
+            document.getElementById("output").textContent= output;
+        }
+    </script>
+</body>
+</html>
