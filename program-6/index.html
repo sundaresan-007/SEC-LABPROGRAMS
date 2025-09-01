@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body{
+            text-align: center;
+            background-color: rgb(223, 126, 223);
+            font-family: Arial,sans-serif;
+            margin: 40px;
+        }
+        li{
+            margin: 8px 0;
+        }
+        .completed{
+            text-decoration: line-through;
+            color: grey;
+        }
+        button.remove{
+            margin-left: 10px;
+            background-color: red;
+            color: white;
+            border:none;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>My To-Do list</h2>
+    <input type="text" id="taskInput" placeholder="Enter a next task"/>
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+    <script>
+        function addTask(){
+            const taskText=document.getElementById("taskInput").value.trim();
+            if(taskText==="")return;
+            const li=document.createElement("li");
+            li.textContent=taskText;
+            li.addEventListener("click",function(){
+            li.classList.toggle("completed");
+          });
+           const removeBtn=document.createElement("button");
+           removeBtn.textContent="Remove";
+           removeBtn.className="remove";
+           removeBtn.addEventListener("click",function(e){
+            e.stopPropagation();
+            li.remove();
+           });
+           li.appendChild(removeBtn);
+           document.getElementById("taskList").appendChild(li);
+           document.getElementById("taskInput").value=="";
+        }
+    </script>
+    
+</body>
+</html>
